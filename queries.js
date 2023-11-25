@@ -94,7 +94,8 @@ db.consumidores.aggregate([
     { $group: { 
         _id: "$distrito.nombre_distrito", 
         count: { $sum: 1 } 
-    } },
+        } 
+    },
     { $sort: { 
         count: -1 
     } }
@@ -104,3 +105,34 @@ db.consumidores.aggregate([
 db.tecnicos.distinct(
     "especialidad",
     { genero: "Masculino" })
+// Consumidores por Departamento
+db.consumidores.aggregate([
+    {
+        $group: {
+            _id:"$distrito.departamento",
+            count:{$sum: 1}
+        } 
+    },
+    {
+        $sort:{
+            count:-1
+        }
+    }
+])
+
+// Cantidad de tecnicos con buen comportamiento
+db.detalleTecnicos.aggregate([
+    {
+        $group:{
+            _id:"$estado",
+            count: {$sum:1}
+        }
+    },
+    {
+        $sort:{
+            count: -1 
+        }
+
+    }
+        
+])
