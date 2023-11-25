@@ -65,3 +65,42 @@ db.reseniasTecnicos.aggregate([
         'quantity': -1
     }}
 ])
+
+
+//Promedio de puntajes de reseñas por técnico
+db.reseniasTecnicos.aggregate([
+    { $group: { 
+        _id: "$tecnicoId", 
+        avgRating: { $avg: "$puntaje" } 
+    } },
+    { $sort: {
+         avgRating: -1 
+        } }
+])
+
+//Encontrar el número de técnicos por especialidad
+db.tecnicos.aggregate([
+    { $group: { 
+        _id: "$especialidad", 
+        count: { $sum: 1 } 
+    } },
+    { $sort: { 
+        count: -1 
+    } }
+])
+
+//Consumidores por distrito
+db.consumidores.aggregate([
+    { $group: { 
+        _id: "$distrito.nombre_distrito", 
+        count: { $sum: 1 } 
+    } },
+    { $sort: { 
+        count: -1 
+    } }
+])
+
+//técnicos de género "Masculino"
+db.tecnicos.distinct(
+    "especialidad",
+    { genero: "Masculino" })
