@@ -120,7 +120,7 @@ db.consumidores.aggregate([
     }
 ])
 
-// Cantidad de tecnicos con buen comportamiento
+// Cantidad de tecnicos por tipo de cuenta
 db.detalleTecnicos.aggregate([
     {
         $group:{
